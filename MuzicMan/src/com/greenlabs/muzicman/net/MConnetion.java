@@ -6,11 +6,11 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Connetion {
+public class MConnetion {
 	public String xml;
 	
-public Connetion() {
-	// TODO Auto-generated constructor stub
+public MConnetion() {
+	
 }
 public String connect(){
 	
@@ -18,16 +18,18 @@ public String connect(){
         URL url = new URL("http://bugthemusiceater.blogspot.in/");
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        //BufferedWriter writer = new BufferedWriter(new FileWriter("d:/data.html"));
+       
 
         String line;
         String data1=null;
         while ((line = reader.readLine()) != null) {
             
             data1=data1+line;
-//            writer.write(line);
-//            writer.newLine();
+
         }
+        
+        
+        //.........logic to extracting the required file...........
 String[] data2=data1.split("<figure>");
 data1=data2[1];
 String[] data3=data1.split("</figure>");

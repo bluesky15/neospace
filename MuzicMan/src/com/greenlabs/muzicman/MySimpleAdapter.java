@@ -60,7 +60,7 @@ private class ViewHolder{
 		 }
 		 Album newalbum= (Album) getItem(position);
 		 holder.albumArt.setImageResource(R.drawable.villan);
-		 holder.albumName.setText(newalbum.getAlbum_name());
+		 holder.albumName.setText(newalbum.getAlbumName());
 		return convertView;
 	}
 

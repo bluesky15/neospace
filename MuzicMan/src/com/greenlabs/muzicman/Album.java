@@ -4,37 +4,39 @@ import java.util.List;
 
 public class Album {
 	
-private int id;
-private String album_name;
-private String albumImage_link;
-private List<Song> album_songs;
+private Long id;
+private String albumName;
+private String albumArt;
+private List<Song> song;
 
-public int getId() {
+public Long getId() {
 	return id;
 }
-public void setId(int id) {
-	this.id = id;
+public void setId(Long id) {
+	this.id =  id;
 }
-public String getAlbum_name() {
-	return album_name;
+public String getAlbumNname() {
+	return albumName;
 }
-public void setAlbum_name(String album_name) {
-	this.album_name = album_name;
+public void setAlbumNname(String albumNname) {
+	this.albumName = albumNname;
 }
-public String getAlbumImage_link() {
-	return albumImage_link;
+public String getAlbumArt() {
+	return albumArt;
 }
-public void setAlbumImage_link(String albumImage_link) {
-	this.albumImage_link = albumImage_link;
+public void setAlbumArt(String albumArt) {
+	this.albumArt = albumArt;
 }
-public List<Song> getAlbum_songs() {
-	return album_songs;
+public List<Song> getSong() {
+	return song;
 }
-public void setAlbum_songs(List<Song> album_songs) {
-	this.album_songs = album_songs;
+public void setSong(List<Song> song) {
+	this.song = song;
 }
-public Album() {
-	// TODO Auto-generated constructor stub
+
+public String getAlbumName() {
+	// TODO Auto-generated method stub
+	return albumName;
 }
 
 }

@@ -1,19 +1,20 @@
 package com.greenlabs.muzicman;
 
 public class Song {
-	private String song_name;
-	public String getSong_name() {
-		return song_name;
+	public String getSongName() {
+		return songName;
 	}
-	public void setSong_name(String song_name) {
-		this.song_name = song_name;
+	public void setSongName(String songName) {
+		this.songName = songName;
 	}
-	public String getSong_link() {
-		return song_link;
+	public String getSongLink() {
+		return songLink;
 	}
-	public void setSong_link(String song_link) {
-		this.song_link = song_link;
+	public void setSongLink(String songLink) {
+		this.songLink = songLink;
 	}
-	private String song_link;
+	private String songName;
+	private String songLink;
+	
 
 }
