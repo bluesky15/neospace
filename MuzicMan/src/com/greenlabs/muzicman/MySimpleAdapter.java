@@ -58,9 +58,10 @@ private class ViewHolder{
 		 else{
 			 holder = (ViewHolder)convertView.getTag();
 		 }
-		 Album newalbum= (Album) getItem(position);
+		 Album newalbum=album.get(position);
 		 holder.albumArt.setImageResource(R.drawable.villan);
 		 holder.albumName.setText(newalbum.getAlbumName());
+		
 		return convertView;
 	}
 
