@@ -37,7 +37,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
    private JsonReader jreader;
 //private MConnetion con;
 //	private String str;
-   Album al = null;
+  
    private ArrayList<Album> album = new ArrayList<Album>();
   
   
@@ -185,7 +185,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 				JSONArray msg = (JSONArray) jsonObject.get("albums");
 				Iterator<JSONObject> iterator = msg.iterator();
 				while (iterator.hasNext()) {
-					    al=new Album();
+					    Album al=new Album();
 					jsonObject=iterator.next();
 					Long albumId=(Long)jsonObject.get("albumId");
 					al.setId(albumId);
