@@ -1,9 +1,14 @@
 package com.greenlabs.muzicman;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Album {
+public class Album implements Serializable {
 	
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = -254787372183330788L;
 private Long id;
 private String albumName;
 private String albumArt;

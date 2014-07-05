@@ -1,6 +1,12 @@
 package com.greenlabs.muzicman;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1901472635209019198L;
 	public String getSongName() {
 		return songName;
 	}

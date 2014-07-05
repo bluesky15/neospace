@@ -81,7 +81,10 @@ public class MMActivity extends Activity implements OnItemClickListener{
 //
 //		Toast toast = Toast.makeText(context, text, duration);
 //		toast.show();
+		Album al_new = new Album();
+		al_new=album.get(position);
 		Intent i = new Intent(MMActivity.this, MainActivity.class);
+		i.putExtra("albumf",al_new );
 		startActivity(i);
 		
 	}
