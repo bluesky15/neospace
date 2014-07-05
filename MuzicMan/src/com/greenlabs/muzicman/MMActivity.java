@@ -22,12 +22,14 @@ import com.greenlab.muzicman.jsonreader.JsonReader;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MMActivity extends Activity implements OnItemClickListener{
 
@@ -72,7 +74,27 @@ public class MMActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
+//		Context context = getApplicationContext();
+//		
+//		CharSequence text = "Hello toast!"+position;
+//		int duration = Toast.LENGTH_LONG;
+//
+//		Toast toast = Toast.makeText(context, text, duration);
+//		toast.show();
+		Intent i = new Intent(MMActivity.this, MainActivity.class);
+		startActivity(i);
+		
+	}
+	private class TaskLauncher extends AsyncTask<Integer, Void, Void>{
+
+		@Override
+		protected Void doInBackground(Integer... params) {
+			Album Lalbum= new Album();
+			Lalbum=album.get(params[0]);
+			
+			
+			return null;
+		}
 		
 	}
     private class MyAsyncTask extends AsyncTask<String, Void, String>{
