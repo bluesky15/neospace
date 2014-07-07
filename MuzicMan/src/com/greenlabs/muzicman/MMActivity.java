@@ -21,8 +21,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import com.greenlab.muzicman.jsonreader.JsonReader;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -30,14 +28,43 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class MMActivity extends Activity implements OnItemClickListener{
 
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.mm, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		//case
+		//case
+		case R.id.refresh_list:
+			MyAsyncTask mat = new MyAsyncTask();
+	    	mat.execute(new String[] { "http://bugthemusiceater.blogspot.in/" });
+		
+	    	return true;
+		case R.id.load_images:
+          ImageLoder il = new ImageLoder();
+          il.execute();
+			return true;
+			default:
+				return super.onMenuItemSelected(featureId, item);
+		}
+		
+	}
+
 	//-----------------------
 	private MySimpleAdapter adapter;
    private ArrayList<Album> album = new ArrayList<Album>();
@@ -53,24 +80,26 @@ public class MMActivity extends Activity implements OnItemClickListener{
         setContentView(R.layout.activity_mm);
         
         ListView lv=(ListView)findViewById(R.id.list);
-        adapter = new MySimpleAdapter(album, MMActivity.this);
-        lv.setAdapter(adapter);
+        
+        
         MyTask2 mt2 = new MyTask2();
     	mt2.execute();
+    	adapter = new MySimpleAdapter(album, MMActivity.this);
+    	lv.setAdapter(adapter);
         lv.setOnItemClickListener(this);
       
        
     }
     //..........button functions..................
     public void getData(View view) {
+//    	ImageLoder iloader = new ImageLoder();
+//		iloader.execute();
     	
-    	MyAsyncTask mat = new MyAsyncTask();
-    	mat.execute(new String[] { "http://bugthemusiceater.blogspot.in/" });
+    	
     }
     
     public void getData2(View view) {
-    Intent i = new Intent(MMActivity.this,MMActivity.class);
-    startActivity(i);
+    //............
     	
     }
     //--------------------------------------------------
@@ -78,6 +107,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
+		
 
 		Album al_new = new Album();
 		al_new=album.get(position);
@@ -90,24 +120,58 @@ public class MMActivity extends Activity implements OnItemClickListener{
 	private class ImageLoder extends AsyncTask<Void , Void, Void>{
 
 		@Override
+		protected void onPostExecute(Void result) {
+			Context context = getApplicationContext();
+			CharSequence text = "download complete";
+			int duration = Toast.LENGTH_SHORT;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show(); 
+			super.onPostExecute(result);
+		}
+
+		@Override
 		protected Void doInBackground(Void... params) {
-			 try {
-				    HttpURLConnection connection = (HttpURLConnection) new URL("").openConnection();
-				    connection.setDoInput(true);
-				    connection.connect();
-				    InputStream is= connection.getInputStream();
-				    Bitmap bitmap= BitmapFactory.decodeStream(is);
-				    
-				    is.close();
-				    
-				   } catch (MalformedURLException e) {
-				    // TODO Auto-generated catch block
-				    e.printStackTrace();
-				   } catch (IOException e) {
-				    // TODO Auto-generated catch block
-				    e.printStackTrace();
-				   }
-			return null;
+			
+				for(int i=1;i<=album.size();i++){
+					Album al2=new Album();
+					al2= album.get(i-1);
+					 try {
+						    HttpURLConnection connection = (HttpURLConnection) new URL(al2.getAlbumArt()).openConnection();
+						    connection.setDoInput(true);
+						    connection.connect();
+						    InputStream is= connection.getInputStream();
+						    Bitmap bitmap= BitmapFactory.decodeStream(is);
+						      
+//						    ContextWrapper cw = new ContextWrapper(getApplicationContext());
+					         // path to /data/data/yourapp/app_data/imageDir
+					        //File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+					        // Create imageDir
+					        
+
+					        FileOutputStream outputStream = null;
+					        outputStream = openFileOutput(i+".png", Context.MODE_PRIVATE);		
+
+					           
+
+					       // Use the compress method on the BitMap object to write image to the OutputStream
+					            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+					            outputStream.close();
+					    	
+						        is.close();
+						    
+						   } catch (MalformedURLException e) {
+						    // TODO Auto-generated catch block
+						    e.printStackTrace();
+						   } catch (IOException e) {
+						    // TODO Auto-generated catch block
+						    e.printStackTrace();
+						   }
+					
+				}
+				
+			 
+			 return null;
 		}
 		
 	}
@@ -177,7 +241,9 @@ public class MMActivity extends Activity implements OnItemClickListener{
 
 		@Override
 		protected void onPostExecute(String result) {
-			// TODO Auto-generated method stub
+			Intent i = new Intent(MMActivity.this,MMActivity.class);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); 
+			startActivity(i);
 			super.onPostExecute(result);
 		}
 
