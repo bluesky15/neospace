@@ -7,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -23,24 +26,25 @@ import com.greenlab.muzicman.jsonreader.JsonReader;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MMActivity extends Activity implements OnItemClickListener{
 
+	
+	//-----------------------
 	private MySimpleAdapter adapter;
-   private JsonReader jreader;
-//private MConnetion con;
-//	private String str;
-  
    private ArrayList<Album> album = new ArrayList<Album>();
   
   
+   
+   //-----------------------------------------
   JSONParser parser = new JSONParser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +69,8 @@ public class MMActivity extends Activity implements OnItemClickListener{
     }
     
     public void getData2(View view) {
-    //	MyTask2 mt2 = new MyTask2();
-    	//mt2.execute();
+    Intent i = new Intent(MMActivity.this,MMActivity.class);
+    startActivity(i);
     	
     }
     //--------------------------------------------------
@@ -74,13 +78,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-//		Context context = getApplicationContext();
-//		
-//		CharSequence text = "Hello toast!"+position;
-//		int duration = Toast.LENGTH_LONG;
-//
-//		Toast toast = Toast.makeText(context, text, duration);
-//		toast.show();
+
 		Album al_new = new Album();
 		al_new=album.get(position);
 		Intent i = new Intent(MMActivity.this, MainActivity.class);
@@ -88,18 +86,44 @@ public class MMActivity extends Activity implements OnItemClickListener{
 		startActivity(i);
 		
 	}
+	//..............................Image loading ................//
+	private class ImageLoder extends AsyncTask<Void , Void, Void>{
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			 try {
+				    HttpURLConnection connection = (HttpURLConnection) new URL("").openConnection();
+				    connection.setDoInput(true);
+				    connection.connect();
+				    InputStream is= connection.getInputStream();
+				    Bitmap bitmap= BitmapFactory.decodeStream(is);
+				    
+				    is.close();
+				    
+				   } catch (MalformedURLException e) {
+				    // TODO Auto-generated catch block
+				    e.printStackTrace();
+				   } catch (IOException e) {
+				    // TODO Auto-generated catch block
+				    e.printStackTrace();
+				   }
+			return null;
+		}
+		
+	}
+	//--------------------------Reserved...-
 	private class TaskLauncher extends AsyncTask<Integer, Void, Void>{
 
 		@Override
 		protected Void doInBackground(Integer... params) {
-			Album Lalbum= new Album();
-			Lalbum=album.get(params[0]);
+			
 			
 			
 			return null;
 		}
 		
 	}
+	//................................getting data from ----greenbug...............
     private class MyAsyncTask extends AsyncTask<String, Void, String>{
 
 		@Override
@@ -124,11 +148,12 @@ public class MMActivity extends Activity implements OnItemClickListener{
 		      }
 		      String data1= response;
 		      
-		      //---------------------------------my logic---------
+		      //---------------------------------my logic to extract the data---------
 		      String[] data2=data1.split("<figure>");
 		      data1=data2[1];
 		      String[] data3=data1.split("</figure>");
 		      data1=data3[0];
+		      //...................................................
 	        String filename = "song.json";
 	    	
 	    	String string =data1;
@@ -158,6 +183,9 @@ public class MMActivity extends Activity implements OnItemClickListener{
 
 			
 		}
+    //....................creating the data objects.............................
+    
+    // Reading from the internal file ...........................................
     private class MyTask2 extends AsyncTask<Void, Void, Void>{
 
 		@Override
@@ -183,6 +211,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 				
 				JSONObject jsonObject = (JSONObject) obj;
 				JSONArray msg = (JSONArray) jsonObject.get("albums");
+				@SuppressWarnings("unchecked")
 				Iterator<JSONObject> iterator = msg.iterator();
 				while (iterator.hasNext()) {
 					    Album al=new Album();
@@ -208,7 +237,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 					}
 					al.setSong(alsong);
 					album.add(al);
-					//System.out.println(al.getAlbumName());
+					
 				}
 		 
 		

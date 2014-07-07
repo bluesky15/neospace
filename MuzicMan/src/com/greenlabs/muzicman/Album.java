@@ -3,6 +3,8 @@ package com.greenlabs.muzicman;
 import java.io.Serializable;
 import java.util.List;
 
+import android.graphics.Bitmap;
+
 public class Album implements Serializable {
 	
 /**
@@ -13,7 +15,14 @@ private Long id;
 private String albumName;
 private String albumArt;
 private List<Song> song;
+private Bitmap bitmap=null;
 
+public Bitmap getBitmap() {
+	return bitmap;
+}
+public void setBitmap(Bitmap bitmap) {
+	this.bitmap = bitmap;
+}
 public Long getId() {
 	return id;
 }
