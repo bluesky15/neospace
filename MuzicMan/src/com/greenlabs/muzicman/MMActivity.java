@@ -22,6 +22,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -82,7 +83,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
         ListView lv=(ListView)findViewById(R.id.list);
         
         
-        MyTask2 mt2 = new MyTask2();
+        InitialTask mt2 = new InitialTask();
     	mt2.execute();
     	adapter = new MySimpleAdapter(album, MMActivity.this);
     	lv.setAdapter(adapter);
@@ -111,7 +112,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 
 		Album al_new = new Album();
 		al_new=album.get(position);
-		Intent i = new Intent(MMActivity.this, MainActivity.class);
+		Intent i = new Intent(MMActivity.this, SongActivity.class);
 		i.putExtra("albumf",al_new );
 		startActivity(i);
 		
@@ -187,7 +188,7 @@ public class MMActivity extends Activity implements OnItemClickListener{
 		}
 		
 	}
-	//................................getting data from ----greenbug...............
+	//................................getting data from ----bug..feed.............
     private class MyAsyncTask extends AsyncTask<String, Void, String>{
 
 		@Override
@@ -252,11 +253,24 @@ public class MMActivity extends Activity implements OnItemClickListener{
     //....................creating the data objects.............................
     
     // Reading from the internal file ...........................................
-    private class MyTask2 extends AsyncTask<Void, Void, Void>{
+    private class InitialTask extends AsyncTask<Void, Void, Void>{
+    	ProgressDialog progDailog = new ProgressDialog(MMActivity.this);
+		@Override
+		protected void onPreExecute() {
+			
+            progDailog.setMessage("Loading...");
+            progDailog.setIndeterminate(false);
+            progDailog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progDailog.setCancelable(true);
+            progDailog.show();
+			super.onPreExecute();
+		}
 
 		@Override
 		protected void onPostExecute(Void result) {
+			
 			adapter.notifyDataSetChanged();
+			progDailog.dismiss();
 			super.onPostExecute(result);
 		}
 
