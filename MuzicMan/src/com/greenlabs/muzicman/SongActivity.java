@@ -1,14 +1,15 @@
 package com.greenlabs.muzicman;
 
 import java.util.ArrayList;
+
 import com.greenlabs.muzicman.adapter.SongAdapter;
 
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,13 +47,25 @@ public class SongActivity extends Activity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
-		Long enqueue =1L;
 		Song sss= new Song();
 		sss=songs.get(position);
-		DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        Request request = new Request(
-                Uri.parse(sss.getSongLink()));
-        enqueue = dm.enqueue(request);
-		
+		String url = sss.getSongLink();
+		String sn = sss.getSongName();
+		String song_n=sn+".mp3";
+		Uri uri=Uri.parse(url);
+	  DownloadManager  mgr=(DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+	    Environment
+	      .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+	      .mkdirs();
+	    
+	    long lastDownload = mgr.enqueue(new DownloadManager.Request(uri)
+	                  .setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI |
+	                                          DownloadManager.Request.NETWORK_MOBILE)
+	                  .setAllowedOverRoaming(false)
+	                  .setTitle(sn)
+	                  .setDescription("Powered by greenLab...")
+	                  .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,
+	                                                     song_n));
+	    
 	}
 }

@@ -19,14 +19,14 @@
             android:layout_weight="1.5" >
 
 <TextView
-            android:id="@+id/ss_name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1.5"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
+    android:id="@+id/ss_name"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_weight="1.5"
+    android:fontFamily="sans-serif-light"
+    android:text="Medium Text"
+    android:textAppearance="?android:attr/textAppearanceSmall" />
     
         </FrameLayout>
 
@@ -40,8 +40,9 @@
     android:id="@+id/ss_status"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:fontFamily="sans-serif-light"
     android:layout_gravity="center"
-    android:layout_weight="1"
+    
     android:text="Small Text"
     android:textAppearance="?android:attr/textAppearanceSmall" />
 
