@@ -10,27 +10,4 @@
         android:layout_weight="0.73" >
     </ListView>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="getData"
-            android:text="Refresh The List" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Load the List" 
-            android:onClick="getData2"/>
-    </LinearLayout>
-
 </LinearLayout>

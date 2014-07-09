@@ -59,7 +59,7 @@ public class SongAdapter extends BaseAdapter{
 			holder.song_name=(TextView)convertView.findViewById(R.id.ss_name);
 			holder.song_status=(TextView)convertView.findViewById(R.id.ss_status);
 			convertView.setTag(holder);
-			convertView.setBackgroundResource(R.drawable.rounder_corner);
+			convertView.setBackgroundResource(R.drawable.listview_selector);
 			
 		}
 		else{

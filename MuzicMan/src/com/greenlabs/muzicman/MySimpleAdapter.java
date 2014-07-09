@@ -59,7 +59,15 @@ private class ViewHolder{
 			 holder = new ViewHolder();
 			 holder.albumArt=(ImageView)convertView.findViewById(R.id.album_art);
 			 holder.albumName= (TextView)convertView.findViewById(R.id.album_name);
+			 
+			 
+			 
 			 convertView.setTag(holder);
+			 
+			 convertView.setBackgroundResource(R.drawable.mm_selector);
+			 
+			 
+			 
 			 
 		 }else{
 			 holder = (ViewHolder)convertView.getTag();
